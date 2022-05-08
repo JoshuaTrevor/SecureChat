@@ -1,4 +1,4 @@
-.login {
+.widget {
     background-color: #fefefe;
     text-align: center;
     width: 20%;
@@ -33,7 +33,7 @@ input[type=text], input[type=password] {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 50%;
+    width: 75%;
   }
   
   /* Add a hover effect for buttons */
