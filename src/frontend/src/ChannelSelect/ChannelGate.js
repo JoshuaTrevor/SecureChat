@@ -8,7 +8,8 @@ class ChannelGate extends React.Component {
     super();
     this.state = {
       mode: "Join_Or_Create",
-      channelName: ""
+      channelName: "Test_Channel",
+      username: "Josh"
     };
   }
 
@@ -32,13 +33,15 @@ class ChannelGate extends React.Component {
     return (
       <div className="widget">
         <h1>Join Channel</h1>
-        <form>
+          <label>Channel Id</label><br/>
           <input type="text" value={this.state.channelName} onChange={(e) => this.setState({channelName: e.target.value})}/><br/>
+
+          <br/><label>Alias</label><br/>
+          <input type="text" value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/><br/>
           
           <div>
             <button onClick={() => this.setState({mode: "Channel"})}>Join</button>
           </div>
-        </form>
       </div>
     );
   }
@@ -48,18 +51,7 @@ class ChannelGate extends React.Component {
   //If channel does not exist, create channel and provide key.
   //Upon copying/acknowledging key, create channel
   create = () => {
-    return (
-      <div className="widget">
-        <h1>Create Channel</h1>
-        <form>
-          <input type="text" value={this.state.channelName} onChange={(e) => this.setState({channelName: e.target.value})}/><br/>
-          
-          <div>
-            <button onClick={() => this.setState({mode: "Channel"})}>Join</button>
-          </div>
-        </form>
-      </div>
-    );
+    return this.join();
   }
 
 
@@ -85,7 +77,7 @@ class ChannelGate extends React.Component {
     }
     else if (this.state.mode === ("Channel"))
     {
-      return <Channel name={this.state.channelName}/>
+      return <Channel state={this.state} />
     }
       
   }
