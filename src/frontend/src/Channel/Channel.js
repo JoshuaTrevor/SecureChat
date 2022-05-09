@@ -16,18 +16,18 @@ class Channel extends React.Component
             username: props.state.username,
             inputContents: "",
             privateKey: "",
-            messageLog: {
-                1425 : ["Josh", "This is a message"],
-                1625 : ["James", "This is another message"],
-                1645 : ["Josh", "This is another message but this one is really long wahhhhhh look at me type weeee hooooo ahahahahhahahha im crazy xdxdxdxdx"],
-            }
+            messageLog: [
+                ["Josh", "This is a message"],
+                ["James", "This is another message"],
+                ["Josh", "This is another message but this one is really long wahhhhhh look at me type weeee hooooo ahahahahhahahha im crazy xdxdxdxdx"],
+            ]
         }
     }
     
     heading = () => {
         return (
             <div>
-                <b>Channel:</b> {this.state.channelName} <br/>
+                <b>Channel:</b> {this.state.channelName.substring(0, 3) + "..."} <br/>
                 <b>User: </b>{this.state.username}
             </div>
         )
@@ -37,24 +37,41 @@ class Channel extends React.Component
     inputBar = () => {
         return (
             <div>
-                <input className="messageInput" type="text" value={this.state.inputContents} onChange={(e) => this.setState({inputContents: e.target.value})}/><br/>
-                <button className="messageInput" id="send">Send</button>
+                <input className="messageInput" type="text" value={this.state.inputContents} onChange={(e) => this.setState({inputContents: e.target.value})} onKeyDown={(e) => this.checkEnter(e)}/><br/>
+                <button className="messageInput" id="send" onClick={() => this.addMessage(this.state.username, this.state.inputContents)}>Send</button>
             </div>
         )
     }
 
     sidebar = () => {
         return (
-            <div>
+            <div id="sidebar">
                 <h1>Private key:</h1>
                 <input id="privateKey" type="text" value={this.state.privateKey} onChange={(e) => this.setState({privateKey: e.target.value})}/><br/>
             </div>
         )
     }
 
+    //Make this into real ID distributor later.
+    generateID = () => {
+        return Math.round(Math.random()*100000);
+    }
+
+    addMessage = (sender, message) => {
+        console.log("called");
+        let messageLog = this.state.messageLog;
+        messageLog.push([sender, message]);
+        this.forceUpdate();
+    }
+
+    checkEnter = (e) => {
+        if (e.key === 'Enter') {
+            this.addMessage(this.state.username, this.state.inputContents);
+          }
+    }
+
     message = (sender, message) => {
         let className = sender === this.state.username ? "selfMsg" : "otherMsg";
-        console.log(className)
         return (
             <div className="blocker">
                 <div className={className}>
@@ -66,10 +83,9 @@ class Channel extends React.Component
 
     messages = () => {
         const messages = [];
-        for(var msgID in this.state.messageLog)
+        for(let i = 0; i < this.state.messageLog.length; i++)
         {
-            console.log("+++++++++++++++++++");
-            let [sender, msg] = this.state.messageLog[msgID];
+            let [sender, msg] = this.state.messageLog[i];
             messages.push(this.message(sender, msg));
         }
         return messages;
@@ -78,7 +94,6 @@ class Channel extends React.Component
 
     render()
     {
-        //console.log(this.state);
         return (
             <div>
                 <div className="page">

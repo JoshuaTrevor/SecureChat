@@ -1,16 +1,18 @@
 .page {
     background-color: #75024f;
     text-align: left;
-    width: max(50%, 600px);
-    height: 100%;
+    width: max(65%, 600px);
+    min-height: 95%;
+    max-height: 95%;
     margin: 0;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0%;
+    left: 25%;
     
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    
     border: 1px solid #888;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
 }
 
 .sidebar {
@@ -64,23 +66,20 @@ label {
 }
 
 .messageInput {
-    max-width: 55%;
-    height: 4.5%;
+    max-width: max(65%, 600px);
+    height: 5%;
     margin: 0;
-    position: absolute;
+    position: fixed;
     top: 95%;
-    left: 47%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    left: 25%;
     border: 1px solid #888;
 }
 
 #send {
     margin: 0;
-    left: 80%;
+    left: 80.125%;
     max-width: 10%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    position: fixed;
 }
 
 
