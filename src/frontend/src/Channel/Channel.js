@@ -4,7 +4,7 @@ import AES from 'crypto-js/aes'
 import Utf8 from 'crypto-js/enc-utf8'
 
 //Test consistent key:
-let pKey = "TKOLASDFNASDIOFNEWAIOJNSFDKLSAKLF"
+let pKey = "blahblah123"
 class Channel extends React.Component 
 {
     constructor(props)
@@ -68,20 +68,29 @@ class Channel extends React.Component
         var origCopy = this.state.messageOrig.map(function(arr) {
             return arr.slice();
         });
-        this.state.messageLog = origCopy;
         const newLog = [];
-        for(let i = 0; i < this.state.messageLog.length; i++)
+        for(let i = 0; i < origCopy.length; i++)
         {
-            const msg = this.state.messageLog[i];
+            const msg = origCopy[i];
             try
             {
-                newLog.push([AES.decrypt(msg[0], e.target.value).toString(Utf8) + "", AES.decrypt(msg[1], e.target.value).toString(Utf8) + ""])
+                let newResult = [AES.decrypt(msg[0], e.target.value).toString(Utf8) + "", AES.decrypt(msg[1], e.target.value).toString(Utf8) + ""];
+                if(newResult[0] === '')
+                    newResult = this.randomMessage();
+                newLog.push(newResult)
             } catch (e) {
-                newLog.push([this.random_string(20), this.random_string(30)]);
+                newLog.push(this.randomMessage());
             }
         }
-        this.state.messageLog = newLog;
+        this.setState({
+            messageLog : newLog
+        })
     }
+
+    randomMessage = () => {
+        return [this.random_string(Math.floor(Math.random()*7)+3), this.random_string(Math.floor(Math.random()*50)+20)];
+    }
+    
 
     random_string = (length) => {
         var result = '';
@@ -113,8 +122,10 @@ class Channel extends React.Component
             this.handleCommand(message.substring(1, message.length));
             return;
         }
-        this.state.messageLog.push([sender, message]);
-        this.state.messageOrig.push([sender, message]);
+
+        //Hypothesis, immutability issue. That's why separately defined ones don't have issues. Need deep copy
+        this.state.messageLog.push([sender.repeat(1), message.repeat(1)]);
+        this.state.messageOrig.push([AES.encrypt(sender, this.state.privateKey).toString(), AES.encrypt(message, this.state.privateKey).toString()]);
 
         //If sending a message, clear messagebox and set delay timer
         if(sender === this.state.username)
