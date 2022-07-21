@@ -7,6 +7,6 @@ Frontend only example hosted statically at https://super-cool-site-by-joshuatrev
 - Messages will only be legible when the private key field of the viewer contains the same private key they were sent with.
 
 An example use case is:
-Fred meets with Andrew about something sensitive and they decide they'd like to keep in touch. They decide on a random key in person, they each write it down and then take home a copy. Fred can now message Andrew the details of a SecureChat channel on an unencrypted platform. After joining the channel and entering the private key they exchanged earlier, both users can communicate freely and securely, without having to store any unencrypted or sensitive information on their device or the SecureChat server.
+Fred meets with Andrew about something sensitive and they decide they'd like to keep in touch. They decide on a random key in person, Each person writes it down and takes home a copy. Fred can now message Andrew the details of a SecureChat channel on an unencrypted platform. After joining the channel and entering the private key they exchanged earlier, both users can communicate freely and securely, without having to store any unencrypted or sensitive information on their device or the SecureChat server.
 
 While more cumbersome, by delegating the key exchange to users a new level of trustlessness and information security becomes possible for a purely web-based communication platform.
